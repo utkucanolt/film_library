@@ -26,8 +26,17 @@ def read_movie_by_id(movie_id: int, db: Session = Depends(get_db)):
 def create_movie(movie: schemas.MovieCreate, db: Session = Depends(get_db)):
     return crud.create_movie(db, movie)
 
+# 🎯 Genel film güncelleme endpoint
 @router.put("/movies/{movie_id}", response_model=schemas.MovieOut)
-def mark_as_watched(movie_id: int, update: schemas.MovieUpdate, db: Session = Depends(get_db)):
+def update_movie(movie_id: int, movie_update: schemas.MovieUpdate, db: Session = Depends(get_db)):
+    updated_movie = crud.update_movie(db, movie_id, movie_update)
+    if not updated_movie:
+        raise HTTPException(status_code=404, detail="Movie not found")
+    return updated_movie
+
+# ✅ Sadece izlenme durumu güncelleme endpoint (ayrı olarak gösterilecek)
+@router.put("/movies/{movie_id}/watched", response_model=schemas.MovieOut)
+def mark_as_watched(movie_id: int, update: schemas.WatchStatusUpdate, db: Session = Depends(get_db)):
     movie = crud.update_watch_status(db, movie_id, update.watched)
     if not movie:
         raise HTTPException(status_code=404, detail="Movie not found")

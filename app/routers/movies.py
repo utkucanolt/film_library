@@ -15,6 +15,10 @@ def get_db():
 def read_movies(db: Session = Depends(get_db)):
     return crud.get_movies(db)
 
+@router.get("/movies/watched", response_model=list[schemas.WatchedMovie])
+def read_watched_movies(db: Session = Depends(get_db)):
+    return crud.get_watched_movies(db)
+
 @router.get("/movies/{movie_id}", response_model=schemas.MovieOut)  # response_model MovieOut olmalı
 def read_movie_by_id(movie_id: int, db: Session = Depends(get_db)):
     movie = crud.get_movie(db, movie_id)  # crud'da fonksiyonun adı get_movie

@@ -7,6 +7,9 @@ def get_movies(db: Session):
 def get_movie(db: Session, movie_id: int): 
     return db.query(models.Movie).filter(models.Movie.id == movie_id).first()
 
+def get_watched_movies(db: Session):
+    return db.query(models.Movie).filter(models.Movie.watched == True).all()
+
 def create_movie(db: Session, movie: schemas.MovieCreate):
     db_movie = models.Movie(**movie.dict())
     db.add(db_movie)

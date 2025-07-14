@@ -24,3 +24,13 @@ class MovieOut(MovieBase):
 
     class Config:
         orm_mode = True
+
+class WatchedMovie(BaseModel):
+    id: int
+    title: str
+    description: str | None = None
+    type: str
+    watched: bool
+
+    class Config:
+        orm_mode = True

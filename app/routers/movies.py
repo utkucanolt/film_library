@@ -32,3 +32,10 @@ def mark_as_watched(movie_id: int, update: schemas.MovieUpdate, db: Session = De
     if not movie:
         raise HTTPException(status_code=404, detail="Movie not found")
     return movie
+
+@router.delete("/movies/{movie_id}", status_code=204)
+def delete_movie(movie_id: int, db: Session = Depends(get_db)):
+    success = crud.delete_movie(db, movie_id)
+    if not success:
+        raise HTTPException(status_code=404, detail="Movie not found")
+    return

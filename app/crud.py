@@ -21,3 +21,11 @@ def update_watch_status(db: Session, movie_id: int, watched: bool):
         db.commit()
         db.refresh(movie)
     return movie
+
+def delete_movie(db: Session, movie_id: int):
+    movie = db.query(models.Movie).filter(models.Movie.id == movie_id).first()
+    if movie:
+        db.delete(movie)
+        db.commit()
+        return True
+    return False

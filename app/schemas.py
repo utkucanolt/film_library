@@ -1,8 +1,9 @@
 from pydantic import BaseModel
+from typing import Optional
 
 class MovieBase(BaseModel):
     title: str
-    description: str | None = None
+    description: Optional[str] = None
     type: str  # "movie" or "series"
 
 class MovieCreate(MovieBase):

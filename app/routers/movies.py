@@ -26,7 +26,7 @@ def read_movie_by_id(movie_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Movie not found")
     return movie
 
-@router.post("/movies", response_model=schemas.MovieOut)
+@router.post("/movies", response_model=schemas.MovieOut, status_code=201)
 def create_movie(movie: schemas.MovieCreate, db: Session = Depends(get_db)):
     return crud.create_movie(db, movie)
 
